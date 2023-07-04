@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "/VghH9Gh5R+tq9wh1P25dsGPLt9oXWDvyu0zYMVYgXdnsdFzogsEjve3LoSOpuAHYdIg6IsPY/XNusUQsHSMTw==",
+  "dgSpecHash": "0407jQIMT/AwlTXlFLMFUUOLFrcz7NnOo17OMxhbdpijSI57HS6pXoEt74kq2+AFQFodM6O7s6vaRGVWQofMug==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Administrator\\Desktop\\Enoca\\Tasks\\Task1\\RabbitMQWEBAPIProducer\\RabbitMQWEBAPI.Consumer\\RabbitMQWEBAPI.Consumer.csproj",
+  "projectFilePath": "C:\\Users\\Administrator\\Desktop\\Enoca\\TasksDone\\Task1\\RabbitMQWEBAPIProducer\\RabbitMQWEBAPI.Consumer\\RabbitMQWEBAPI.Consumer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",

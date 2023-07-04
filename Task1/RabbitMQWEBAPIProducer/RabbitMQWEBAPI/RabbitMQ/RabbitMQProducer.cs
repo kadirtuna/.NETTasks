@@ -13,7 +13,7 @@ namespace RabbitMQWEBAPI.Producer.RabbitMQ
         {
             //Establishing a connection
             ConnectionFactory factory = new();
-            factory.Uri = new("amqps://pmntnffl:bGXgIbPypteSjyPk3X63IXO8-J7Wk3t5@vulture.rmq.cloudamqp.com/pmntnffl");
+            factory.Uri = new("<RABBITMQ-CONNECTION-URI>");
 
             //Activating the connectiong and opening a channel
             _connection = factory.CreateConnection();

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Administrator\\Desktop\\Enoca\\Tasks\\Task1\\RabbitMQTrial.Consumer\\RabbitMQTrial.Consumer\\RabbitMQTrial.Consumer.csproj": {}
+    "C:\\Users\\Administrator\\Desktop\\Enoca\\TasksDone\\Task1\\RabbitMQTrial.Consumer\\RabbitMQTrial.Consumer\\RabbitMQTrial.Consumer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Administrator\\Desktop\\Enoca\\Tasks\\Task1\\RabbitMQTrial.Consumer\\RabbitMQTrial.Consumer\\RabbitMQTrial.Consumer.csproj": {
+    "C:\\Users\\Administrator\\Desktop\\Enoca\\TasksDone\\Task1\\RabbitMQTrial.Consumer\\RabbitMQTrial.Consumer\\RabbitMQTrial.Consumer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Administrator\\Desktop\\Enoca\\Tasks\\Task1\\RabbitMQTrial.Consumer\\RabbitMQTrial.Consumer\\RabbitMQTrial.Consumer.csproj",
+        "projectUniqueName": "C:\\Users\\Administrator\\Desktop\\Enoca\\TasksDone\\Task1\\RabbitMQTrial.Consumer\\RabbitMQTrial.Consumer\\RabbitMQTrial.Consumer.csproj",
         "projectName": "RabbitMQTrial.Consumer",
-        "projectPath": "C:\\Users\\Administrator\\Desktop\\Enoca\\Tasks\\Task1\\RabbitMQTrial.Consumer\\RabbitMQTrial.Consumer\\RabbitMQTrial.Consumer.csproj",
+        "projectPath": "C:\\Users\\Administrator\\Desktop\\Enoca\\TasksDone\\Task1\\RabbitMQTrial.Consumer\\RabbitMQTrial.Consumer\\RabbitMQTrial.Consumer.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Administrator\\Desktop\\Enoca\\Tasks\\Task1\\RabbitMQTrial.Consumer\\RabbitMQTrial.Consumer\\obj\\",
+        "outputPath": "C:\\Users\\Administrator\\Desktop\\Enoca\\TasksDone\\Task1\\RabbitMQTrial.Consumer\\RabbitMQTrial.Consumer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
