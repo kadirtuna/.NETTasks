@@ -1,0 +1,55 @@
+﻿@page "/login"
+@inject HttpClient Http
+@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager NavigationManager
+@inject ILocalStorageService LocalStorage
+@inject IAuthService AuthService
+
+<PageTitle>Login Page</PageTitle>
+<h3>Login Page</h3>
+
+<EditForm Model="authenticationDTO" OnSubmit="HandleLogin">
+    <table class="table" style="width: 20%">
+        <tr>
+            <th><label for="username">Username:</label></th>
+            <td><InputText id="username" @bind-Value="authenticationDTO.Username"></InputText></td>
+        </tr>
+        <tr>
+            <th><label for="password">Password: </label></th>
+            <td><InputText id="password" type="password" @bind-Value="authenticationDTO.Password"></InputText></td>
+        </tr>
+    </table>
+    <br />
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <br />
+    <br />
+    @if (ErrorMessage != null)
+    {
+     <p> <span style="color: red;">ERROR:</span> @ErrorMessage</p>   
+    }
+</EditForm>
+
+@code {
+    AuthenticationDTO authenticationDTO = new AuthenticationDTO();
+    TokenDTO tokenDTO = new TokenDTO();
+    string ErrorMessage = null;
+
+    public class TokenDTO
+    {
+        public string Token { get; set; }
+    }
+
+    async Task HandleLogin()
+    {
+        bool isSuccessToken = await AuthService.RegistToken(authenticationDTO);
+
+        if (isSuccessToken)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            ErrorMessage = "Username or password is given incorrectly! or The user may be inactive!";
+        }
+    }
+}

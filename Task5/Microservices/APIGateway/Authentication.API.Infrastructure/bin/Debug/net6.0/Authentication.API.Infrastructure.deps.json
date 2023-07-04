@@ -1,0 +1,47 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "Authentication.API.Infrastructure/1.0.0": {
+        "dependencies": {
+          "Authentication.API.Models": "1.0.0",
+          "Shared": "1.0.0"
+        },
+        "runtime": {
+          "Authentication.API.Infrastructure.dll": {}
+        }
+      },
+      "Authentication.API.Models/1.0.0": {
+        "runtime": {
+          "Authentication.API.Models.dll": {}
+        }
+      },
+      "Shared/1.0.0": {
+        "runtime": {
+          "Shared.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Authentication.API.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Authentication.API.Models/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Shared/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

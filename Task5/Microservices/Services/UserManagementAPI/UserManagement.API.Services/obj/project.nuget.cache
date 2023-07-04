@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "sB3+ezXGzuVk0ZqHLEKOOWy5XHaJK65tIho9UuapGczQrgxr/XL/vBBIqvDmnT/QApFPj/rKp3MAuYizMBtD4w==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Administrator\\Desktop\\Enoca\\Tasks\\Task5\\Microservices\\Services\\UserManagementAPI\\UserManagement.API.Services\\UserManagement.API.Services.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\7.0.0\\microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.extensions.primitives\\7.0.0\\microsoft.extensions.primitives.7.0.0.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

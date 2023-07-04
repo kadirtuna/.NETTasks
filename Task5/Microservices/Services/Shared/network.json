@@ -1,0 +1,7 @@
+{
+  "SharedIP": {
+    "AuthenticationAPI": "http://localhost:9000",
+    "UserManagementAPI": "http://localhost:8000",
+    "DatabaseAPI": "http://localhost:7000"
+  }
+}

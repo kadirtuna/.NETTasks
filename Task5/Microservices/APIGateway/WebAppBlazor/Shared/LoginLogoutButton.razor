@@ -1,0 +1,40 @@
+﻿@inject NavigationManager NavigationManager
+@inject ILocalStorageService LocalStorage
+@inject AuthenticationStateProvider AuthStateProvider
+
+<AuthorizeView>
+    <Authorized>
+        <span>Welcome, @context.User.FindFirst(ClaimTypes.Role).Value - @context.User.Identity.Name &nbsp;</span> &nbsp;
+        <button @onclick="GoToProfile" class="btn btn-primary">Profile</button>
+        &nbsp;
+        <button @onclick="Logout" class="btn btn-danger">Logout</button>
+    </Authorized>
+    <NotAuthorized>
+        <button @onclick="Login" class="btn btn-primary">Login</button> &nbsp;
+        <button @onclick="Register" class="btn btn-primary">Register</button>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    void Login()
+    {
+        NavigationManager.NavigateTo("Login");
+    }
+
+    void GoToProfile()
+    {
+        NavigationManager.NavigateTo("Profile");
+    }
+
+    async Task Register()
+    {
+        NavigationManager.NavigateTo("Register");
+    }
+
+    async Task Logout()
+    {
+        await LocalStorage.RemoveItemAsync("token");
+        await AuthStateProvider.GetAuthenticationStateAsync();
+    }
+
+}

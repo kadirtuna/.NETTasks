@@ -1,0 +1,110 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/Authentication/Login",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 9000
+        }
+      ],
+      "UpstreamPathTemplate": "/api/auth/Login",
+      "UpstreamHttpMethod": [ "Post" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/UserManagement/GetUserById/{Id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 8000
+        }
+      ], //http://localhost:8000/api/UserManagement/GetUserById/1
+      "UpstreamPathTemplate": "/api/ManageUser/GetUserById/{Id}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/UserManagement/GetUserByUsername/{username}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 8000
+        }
+      ], //http://localhost:8000/api/UserManagement/GetUserByUsername/{username}
+      "UpstreamPathTemplate": "/api/ManageUser/GetUserByUsername/{username}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/UserManagement/GetAllUsers",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 8000
+        }
+      ], //http://localhost:8000/api/UserManagement/GetAllUsers
+      "UpstreamPathTemplate": "/api/ManageUser/GetAllUsers",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/UserManagement/PostUser",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 8000
+        }
+      ], //http://localhost:8000/api/UserManagement/PostUser
+      "UpstreamPathTemplate": "/api/ManageUser/PostUser",
+      "UpstreamHttpMethod": [ "Post" ]
+      
+    },
+    {
+      "DownstreamPathTemplate": "/api/UserManagement/PutUser",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 8000
+        }
+      ], //http://localhost:8000/api/UserManagement/PutUser
+      "UpstreamPathTemplate": "/api/ManageUser/PutUser",
+      "UpstreamHttpMethod": [ "Put" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    },
+    {
+      //"DownstreamPathTemplate": "/api/UserManagement/DeleteUser?username={username}",
+      "DownstreamPathTemplate": "/api/UserManagement/DeleteUser?username={username}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 8000
+        }
+      ], //http://localhost:8000/api/UserManagement/DeleteUser?username={username}
+      "UpstreamPathTemplate": "/api/ManageUser/DeleteUser?username={username}",
+      "UpstreamHttpMethod": [ "Put" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    }
+  ]
+}

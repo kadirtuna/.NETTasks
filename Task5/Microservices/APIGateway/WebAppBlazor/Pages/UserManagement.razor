@@ -1,0 +1,328 @@
+﻿@page "/UserManagement"
+@inject IUserService UserService
+@inject AuthenticationStateProvider AuthStateProvider
+
+@*@inject IJSRuntime JSRuntime*@
+@*@using Microsoft.AspNetCore.Components.QuickGrid*@
+@using Microsoft.AspNetCore.Components.QuickGrid
+
+@if (@loading)
+{
+    <div class="">
+        <p>Loading!</p>
+    </div>
+}
+else
+{
+    <div>
+        <h3>User Management</h3>
+        <hr />
+        <br />
+    </div>
+
+    <div>
+        <p>@Message</p>
+    </div>
+
+    <AuthorizeView Roles="Admin" Context="contextAuthorize">
+        <Authorized>
+            <table class="top-table">
+                <tr>
+                    <td>
+                        <button type="submit "class="refresh-button" @onclick="Refresh">Refresh</button>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+            <table class="top-table">
+                <tr>
+                    <td>
+                        <div class="page-size-chooser">
+                            Show
+                            <select @bind="@pagination.ItemsPerPage">
+                                <option>5</option>
+                                <option>10</option>
+                                <option>20</option>
+                                <option>50</option>
+                            </select>
+                            entries
+                        </div>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <div class="container">
+                            <div class="input-group mb-2 col-xs-2">
+                                <input type="search" placeholder="Search here..." aria-describedby="button-addon5" class="form-control" autofocus @bind="searchUsername" @bind:event="oninput">
+                                <div class="input-group-append">
+                                    <button id="button-addon5" type="submit" class="btn btn-primary"> <i class="fa fa-search" disabled></i> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <br/>
+            @if (!gridLoading)
+            {
+                <div class="grid" tabindex="-1">
+                    @*<QuickGrid Items="@filteredUsers" @ref="grid" ResizableColumns Pagination="pagination">*@
+                    <QuickGrid Items="filteredUsers" @ref="grid" ResizableColumns Pagination="pagination">
+                    @*<PropertyColumn Property="@(p => p.Id)" Sortable="true" IsDefaultSort="SortDirection.Ascending"></PropertyColumn>*@
+                    <PropertyColumn Class="property-column" Property="@(p => p.Username)" Sortable="true" Title="Username"></PropertyColumn>
+                    <PropertyColumn Property="@(p => p.Name)" Sortable="true">
+                        <ColumnOptions>
+                            <div class="form-group">
+                                <input class="form-control" type="search" placeholder="Type name" @bind="@searchName" @bind:event="oninput"/>
+                            </div>
+                        </ColumnOptions>
+                    </PropertyColumn>
+                    <PropertyColumn Property="@(p => p.Surname)" Sortable="true">
+                        <ColumnOptions>
+                            <div class="form-group">
+                            <input class="form-control" type="search" placeholder="Type surname" @bind="@searchSurname" @bind:event="oninput" />
+                            </div>
+                        </ColumnOptions>
+                    </PropertyColumn>
+                    <PropertyColumn Property="@(p => p.Role)" Sortable="true"></PropertyColumn>
+                    <PropertyColumn Property="@(p => p.Email)" Sortable="true" Title="E-Mail"></PropertyColumn>
+                    <TemplateColumn Title="Status" SortBy="@statusSort" Align="Align.Center">
+                    <ChildContent>
+                        @if (@context.State)
+                                {
+                                    <div class="active">
+                                        <button class="active-button" type="button" disabled>Active</button>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="inactive">
+                                        <button class="inactive-button" type="button" disabled>Inactive</button>
+                                    </div>
+                                }
+                            </ChildContent>
+                            <ColumnOptions>
+                                <label>
+                                    <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" aria-describedby="button-addon5" autofocus @bind="activeOnly" @onclick="FilterChangedAsync" />Actives Only
+                                    </div>
+                                </label>
+                            </ColumnOptions>
+                        </TemplateColumn>
+                        <TemplateColumn Title="Operations">
+                            <button class="btn btn-primary" @onclick="@(() => Edit(context))"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                        </TemplateColumn>
+                    </QuickGrid>
+                    <Paginator Value="@pagination" />
+                </div>
+            }
+            </Authorized>
+            <NotAuthorized>
+                <div>
+                    <p>Sorry, you're not authorized to see this content!'</p>
+                </div>
+            </NotAuthorized>
+            </AuthorizeView>
+}
+
+@code {
+    public IQueryable<User> OriginalUsers { get; set; } = null!;
+    public IQueryable<User>? Users { get; set; } = null!;
+    public IQueryable<User>? filteredUsers => Users?
+    .Where(u => u.Username.Contains(searchUsername, StringComparison.CurrentCultureIgnoreCase))
+    .Where(u => u.Name.Contains(searchName, StringComparison.CurrentCultureIgnoreCase))
+    .Where(u => u.Surname.Contains(searchSurname, StringComparison.CurrentCultureIgnoreCase));
+    public string? Message { get; set; }
+    public string? searchUsername = string.Empty;
+    public string? searchName = string.Empty;
+    public string? searchSurname = string.Empty;
+    public Boolean loading = true;
+    public Boolean gridLoading = true;
+    public Boolean activeOnly = false;
+    PaginationState pagination = new PaginationState { ItemsPerPage = 10 };
+    QuickGrid<User>? grid;
+    GridSort<User> statusSort = GridSort<User>.ByAscending(x => x.State);
+
+    protected async override Task OnInitializedAsync()
+    {
+        var users = await UserService.ReadAllUsers();
+        OriginalUsers = users.AsQueryable();
+        Users = OriginalUsers;
+        loading = false;
+        gridLoading = false;
+    }
+
+    public async Task Refresh()
+    {
+        gridLoading = true;
+        var users = await UserService.ReadAllUsers();
+        OriginalUsers = users.AsQueryable();
+        Users = OriginalUsers;
+        gridLoading = false;
+    }
+
+    public async Task FilterChangedAsync()
+    {
+        if (!activeOnly)
+        {
+            Users = OriginalUsers.Where(u => u.State == true);
+        }
+        else
+        {
+            Users = OriginalUsers;
+        }
+
+        await grid!.RefreshDataAsync(); 
+    }
+
+    public void Edit(User user)
+    {
+        Message = "Editing: " + user.Username;
+    }
+
+    public List<User> GetUsers()
+    {
+        var users = new List<User>();
+
+        for (int i = 0; i < 30; i++)
+        {
+            var name = Faker.Name.First();
+            var surname = Faker.Name.Last();
+            var username = (name + surname).ToLower();
+
+            users.Add(new User()
+                {
+                    Id = i,
+                    Name = name,
+                    Surname = surname,
+                    Username = username,
+                    Email = Faker.Internet.Email(),
+                    Role = "User",
+                    State = true
+                });
+
+            if (i % 10 == 0)
+                users.LastOrDefault().Role = "Admin";
+
+            if (i % 6 == 0)
+                users.LastOrDefault().State = false;
+        }
+
+        return users;
+    }
+}
+
+@*To Do List
+1 - Paginated GetUsers method will be taken from the WEB API.
+2 - Filtering feature will be added.
+3 - Inline will be put for the columns of the table.*@
+
+
+@*        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string Role { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public Boolean State { get; set; }
+
+        Name
+        Surname
+        Username
+        Role
+        Email
+        State*@
+
+@*
+<div class="container">
+    <div class="row mt-5">
+        <div class="card">
+            <h3 class="card-header font-weight-bold">Update User</h3>
+            <hr />
+
+            <div class="card-body">
+                <div id="user-table" class="table-responsive">
+                    <table id="users-data" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Name</th>
+                                <th>Surname</th>
+                                <th>Email</th>
+                                <th>Operations</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (@Users != null)
+                            {
+                                @foreach (var user in @Users)
+                                {
+                                    <tr>
+                                        <td>@user.Username</td>
+                                        <td>@user.Name</td>
+                                        <td>@user.Surname</td>
+                                        <td>@user.Email</td>
+                                        <td>
+                                            <button id="btnKullaniciGuncelle" data-bs-toggle="modal" data-bs-target="#editUserModal" value="@user.Id" type="button" class="btn btn-success"><i class="fas fa-edit"></i></button>
+                                            <button id="btnKullaniciSil" value="@user.Id" type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                    <button class="btn btn-primary" type="submit" @onclick="CallJSMethod">Click Me!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editUserModalLabel">Kullanıcı Düzenle</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="editUserForm">
+                        <div class="form-group">
+                            <label for="userName">Kullanıcı Adı</label>
+                            <input type="text" class="form-control" id="userName" name="userName">
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Ad</label>
+                            <input type="text" class="form-control" id="name" name="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="surname">Soyad</label>
+                            <input type="text" class="form-control" id="surname" name="surname">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email">
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" name="isCheckedNewPassword" class="form-check-input" id="changePasswordCheckbox">
+                            <label class="form-check-label" for="changePasswordCheckbox">Şifreyi değiştir</label>
+                        </div>
+                        <div id="passwordField" style="display:none">
+                            <div class="form-group">
+                                <label for="newPassword">Yeni Şifre</label>
+                                <input type="password" class="form-control" id="newPassword" name="newPassword">
+                            </div>
+                        </div>
+                        <input type="hidden" id="updateUserId" name="updateUserId" value="0" />
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="closeEditUserModal" data-dismiss="modal">Kapat</button>
+                    <button type="button" class="btn btn-primary" id="editUserBtn">Kaydet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@

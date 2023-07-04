@@ -1,0 +1,14 @@
+USE [MicroservicesEnoca]
+GO
+SET IDENTITY_INSERT [dbo].[Users] ON 
+GO
+INSERT [dbo].[Users] ([Id], [Name], [Surname], [Username], [Password], [Email], [Phone]) VALUES (1, N'Kadir', N'Tuna', N'kadirtuna', N'12345', N'kadirtuna@gmail.com', N'5315781646')
+GO
+INSERT [dbo].[Users] ([Id], [Name], [Surname], [Username], [Password], [Email], [Phone]) VALUES (3, N'Hediye Nur', N'Yurttaş', N'hediyenuryurttas', N'159999', N'hnuryuttas@gmail.com', N'5353149454')
+GO
+INSERT [dbo].[Users] ([Id], [Name], [Surname], [Username], [Password], [Email], [Phone]) VALUES (5, N'Ömer', N'Tuna', N'omertuna', N'954645', N'omertuna@gmail.com', N'5325416845')
+GO
+INSERT [dbo].[Users] ([Id], [Name], [Surname], [Username], [Password], [Email], [Phone]) VALUES (6, N'Fatma Rabia', N'Tuna', N'fatmatuna', N'135678', N'fatmatuna@gmail.com', N'5375416845')
+GO
+SET IDENTITY_INSERT [dbo].[Users] OFF
+GO

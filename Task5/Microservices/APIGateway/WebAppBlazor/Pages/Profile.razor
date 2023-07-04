@@ -1,0 +1,154 @@
+﻿@page "/Profile"
+@inject IUserService UserService;
+@inject NavigationManager NavigationManager
+
+<PageTitle>Profile Information</PageTitle>
+
+<AuthorizeView>
+    <Authorized>
+        <div style="display: @readModeState">
+            <h3>Profile - Read Mode</h3>
+            <table class="table" style="width: 20%;" >
+                <tr>
+                    <th>Name: </th>
+                    <td>@user.Name</td>
+                </tr>
+                <tr>
+                    <th>Surname: </th>
+                    <td>@user.Surname</td>
+                </tr>
+                <tr>
+                    <th>Username: </th>
+                    <td>@user.Username</td>
+                </tr>
+                <tr>
+                    <th>Password: </th>
+                    <td>******</td>
+                </tr>
+                <tr>
+                    <th>Role: </th>
+                    <td>@user.Role</td>
+                </tr>
+                <tr>
+                    <th>E-mail: </th>
+                    <td>@user.Email</td>
+                </tr>
+                <tr>
+                    <th>Phone: </th>
+                    <td>@user.Phone</td>
+                </tr>
+                <tr>
+                    <th>State: </th>
+                    <td>@user.State</td>
+                </tr>
+            </table>   
+            <br />
+            <EditForm Model="readModeState" OnSubmit="TurnToUpdateMode" Context="TurningToTheUpdateMode">
+                <button type="submit" class="btn btn-primary">Turn to Update Mode</button>    
+            </EditForm>
+        </div>
+        <div style="display: @updateModeState">
+            <h3>Profile - Update Mode</h3>
+            <EditForm Model="updateUserDTO" OnSubmit="TurnToReadMode" Context="TurningToTheReadMode">
+                <table class="table" style="width: 20%;" >
+                    <tr>
+                        <th>Name: </th>
+                        <td><InputText id="name" @bind-Value="updateUserDTO.Name"></InputText></td>
+                    </tr>
+                    <tr>
+                        <th>Surname: </th>
+                        <td><InputText id="surname" @bind-Value="updateUserDTO.Surname"></InputText></td>
+                    </tr>
+                    <tr>
+                        <th>Username: </th>
+                        <td><InputText id="username" @bind-Value="updateUserDTO.Username" readonly></InputText></td>
+                    </tr>
+                    <tr>
+                        <th>Password: </th>
+                        <td><InputText id="password" type="password" @bind-Value="updateUserDTO.Password"></InputText></td>
+                    </tr>
+                    <tr>
+                        <th>E-mail: </th>
+                        <td><InputText id="email" @bind-Value="updateUserDTO.Email"></InputText></td>
+                    </tr>
+                    <tr>
+                        <th>Phone: </th>
+                        <td><InputText id="phone" @bind-Value="updateUserDTO.Phone"></InputText></td>
+                    </tr>
+                    @*<tr>
+                        <th>State: </th>
+                        <td><InputText type="radio" id="state" @bind-Value="updateUserDTO.State"></InputText></td>
+                    </tr>*@
+                </table>   
+                <br />
+                <button type="submit" class="btn btn-warning">Turn to Read Mode</button>    
+                </EditForm>
+                &nbsp;
+                <EditForm Model="updateModeState" OnSubmit="SubmitUpdate" Context="SubmitUpdate">
+                    <button type="submit" class="btn btn-primary">Update</button
+                </EditForm>
+                &nbsp;
+                <EditForm Model="updateModeState" OnSubmit="SubmitDelete" Context="SubmitDelete">
+                    <button type="submit" class="btn btn-danger">Delete</button
+                </EditForm>
+                <br />
+                <p>@updateMessage</p>
+                <br />
+                <p>@deleteMessage</p>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        You have not signed in yet!
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    User user = new User();
+    UpdateUserDTO updateUserDTO = new UpdateUserDTO();
+    DeleteUserDTO deleteUserDTO = new DeleteUserDTO();
+
+    string readModeState = "inline";
+    string updateModeState = "None";
+    string updateMessage = null;
+    string deleteMessage = null;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        user = await UserService.ReadUser();
+
+        updateUserDTO.Name = user.Name;
+        updateUserDTO.Surname = user.Surname;
+        updateUserDTO.Username= user.Username;
+        updateUserDTO.Password = user.Password;
+        updateUserDTO.Email = user.Email;
+        updateUserDTO.Phone = user.Phone;
+        updateUserDTO.State = true;
+
+        deleteUserDTO.Username = user.Username;
+    }
+
+    async Task SubmitUpdate()
+    {
+        updateMessage = await UserService.UpdateUser(updateUserDTO);
+    }
+
+    async Task SubmitDelete()
+    {
+        deleteMessage = await UserService.DeleteUser(deleteUserDTO);
+
+        NavigationManager.NavigateTo("/");
+    }
+
+    void TurnToUpdateMode()
+    {
+        readModeState = "None";
+        updateModeState = "inline";
+    }
+
+    void TurnToReadMode()
+    {
+        readModeState = "inline";
+        updateModeState = "None";
+    }
+
+}

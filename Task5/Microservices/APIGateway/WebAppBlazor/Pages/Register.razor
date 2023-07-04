@@ -1,0 +1,58 @@
+﻿@page "/Register"
+@inject IUserService UserService
+
+<PageTitle>Register Page</PageTitle>
+<h3>Register</h3>
+
+<AuthorizeView>
+    <Authorized>
+        <p>You're already signed in!</p>
+    </Authorized>
+    <NotAuthorized>
+        <EditForm Model="createUserDTO" OnSubmit="RegisterUser" Context="RegisterEditForm">
+            <table class="table" style="width: 20%">
+                <tr>
+                    <th>Name: </th>
+                    <td><InputText id="name" placeholder="Kadir" @bind-Value="createUserDTO.Name"></InputText></td>
+                </tr>
+                <tr>
+                    <th>Surname: </th>
+                    <td><InputText id="surname" placeholder="Tuna" @bind-Value="createUserDTO.Surname"></InputText></td>
+                </tr>
+                <tr>
+                    <th>Username: </th>
+                    <td><InputText id="username" placeholder="kadirtuna" @bind-Value="createUserDTO.Username"></InputText></td>
+                </tr>
+                <tr>
+                    <th>Password: </th>
+                    <td><InputText id="password" placeholder="password" type="password" @bind-Value="createUserDTO.Password"></InputText></td>
+                </tr>
+                <tr>
+                    <th>E-mail: </th>
+                    <td><InputText id="email" placeholder="kadirtuna@gmail.com" @bind-Value="createUserDTO.Email"></InputText></td>
+                </tr>
+                <tr>
+                    <th>Phone: </th>
+                    <td><InputText id="phone" placeholder="5315781646" @bind-Value="createUserDTO.Phone"></InputText></td>
+                </tr>
+            </table>
+            <br />
+            <button class="btn btn-primary" type="submit">Submit</button>
+            <br />
+            <br />
+            <p>@message</p>
+        </EditForm>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    CreateUserDTO createUserDTO = new CreateUserDTO();
+    string message = null;
+
+    async Task RegisterUser()
+    {
+        message = await UserService.Register(createUserDTO);
+    }
+
+}
+

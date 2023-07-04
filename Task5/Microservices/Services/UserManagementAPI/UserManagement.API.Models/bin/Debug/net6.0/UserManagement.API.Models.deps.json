@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "UserManagement.API.Models/1.0.0": {
+        "runtime": {
+          "UserManagement.API.Models.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "UserManagement.API.Models/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

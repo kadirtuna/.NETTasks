@@ -1,0 +1,27 @@
+﻿@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Login Page";
+}
+
+
+<h3>Login Form</h3>
+
+<form method="post">
+    <div asp-validation-summary="All"></div>
+    <div>
+        <label for="username" asp-for="@Model.Username">Username:</label>
+        <input type="text" id="username" name="username" asp-for="@Model.Username">
+    </div>
+    <div>
+        <label for="password" asp-for="@Model.Password">Password:</label>
+        <input type="password" id="pasword" name="password" asp-for="@Model.Password">
+    </div>
+    <button type="submit">Submit</button>
+
+</form>
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <p>@Model.ErrorMessage</p>
+}

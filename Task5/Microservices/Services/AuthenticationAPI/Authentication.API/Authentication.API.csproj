@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.16" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\APIGateway\Authentication.API.Infrastructure\Authentication.API.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\APIGateway\Authentication.API.Models\Authentication.API.Models.csproj" />
+    <ProjectReference Include="..\..\..\APIGateway\Authentication.API.Services\Authentication.API.Services.csproj" />
+  </ItemGroup>
+
+</Project>

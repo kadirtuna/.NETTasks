@@ -1,0 +1,22 @@
+﻿@page "/"
+@using Microsoft.JSInterop
+@inject IJSRuntime JSRuntime
+
+<PageTitle>Microservices</PageTitle>
+
+<h1>Welcome to Microservices Presentation</h1>
+
+This Website is developed for the company of ENOCA!
+
+<button class="btn btn-primary" @onclick="@HandleClick">Click Me!</button>
+<button id="btnKullaniciGuncelle" data-bs-toggle="modal" data-bs-target="#editUserModal" value="trial" type="button" class="btn btn-success"><i class="fas fa-edit"></i></button>
+<button id="btnKullaniciGuncelle2" data-bs-toggle="modal" data-bs-target="#editUserModal" type="button" class="btn btn-success"><i class="fas fa-edit"></i></button>
+@*<SurveyPrompt Title="How is Blazor working for you?" />*@
+
+@code{
+    private async void HandleClick()
+    {
+        await JSRuntime.InvokeVoidAsync("getGreeting", "Merhaba");
+    }
+        
+}

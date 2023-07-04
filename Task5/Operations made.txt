@@ -1,0 +1,2 @@
+1 - Mikroservislerin dışarıdan ulaşıma kapatılma işlemi yapılmadı.
+2 - 
